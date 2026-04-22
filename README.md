@@ -36,140 +36,124 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 
 ---
 
-# 🖥️ Splunk Installation
+Perfect—now I’ll align your **README image sections exactly to your real filenames** so everything renders correctly on GitHub.
 
-### Splunk Installation
-
-
-**Description:** Splunk Enterprise is successfully installed and running, providing the SIEM platform used for log collection, search, and security monitoring.
+Here is your **fixed README screenshots section (copy-paste ready):**
 
 ---
 
-# 🔐 Splunk Login Interface
-
-### Splunk Login
-
-**Description:** Shows successful login to Splunk Web UI, confirming access to the Search & Reporting environment for security analysis.
+# 📸 SOC Brute Force Detection – Screenshots
 
 ---
 
-# 📡 Universal Forwarder Installation
+## 🏠 Splunk Homepage
 
-### Splunk Universal Forwarder Installation
+### Splunk Home Dashboard
 
+![Homepage](Homepage.png)
 
-**Description:** Splunk Universal Forwarder installed on a Windows endpoint to collect and forward Security Event Logs to the Splunk server.
-
----
-
-# 📥 Data Ingestion Verification
-
-### Data Ingestion into Splunk
-
-
-
-**Description:** Confirms successful ingestion of Windows Security Event Logs into Splunk index (main), validating data pipeline setup.
+**Description:**
+Splunk homepage showing successful login to the Search & Reporting interface used for security monitoring and analysis.
 
 ---
 
-# 🔍 Raw Log Search
+## ⚙️ Forwarder Setup
 
-### Raw Authentication Logs
+### Splunk Universal Forwarder Configuration
 
+![Forwarder Setup](Forwarder Setup.png)
 
-
-**Description:** Displays raw Windows authentication events including failed (4625) and successful (4624) login attempts used for detection engineering.
-
----
-
-# 🧠 Correlation Search (Brute Force Detection)
-
-### Brute Force Correlation Search
-
-
-**Description:** SPL query correlating multiple failed login attempts followed by a successful login for the same user to detect potential brute force attacks.
+**Description:**
+Configuration of Splunk Universal Forwarder on a Windows endpoint to forward authentication logs to Splunk index for analysis.
 
 ---
 
-## ⚙️ Detection Logic (SPL Query)
+## 📥 Windows Authentication Logs (4624)
 
-```spl
-index=main (EventCode=4625 OR EventCode=4624)
-| stats 
-    count(eval(EventCode=4625)) as failures,
-    count(eval(EventCode=4624)) as successes,
-    values(src_ip) as ip
-    by Account_Name
-| where failures >= 3 AND successes >= 1
-```
+### Successful Login Events (4624)
+
+![4624](4624.png)
+
+**Description:**
+Windows Event ID 4624 showing successful authentication events used for correlation in brute force detection.
 
 ---
 
-# 🚨 Alert Triggered
+## ❌ Failed Login Events (4625)
 
-### Alert Triggered
+### Failed Authentication Attempts (4625)
 
+![4625](4625.png)
 
-
-**Description:** Splunk alert triggered when correlation rule detects suspicious authentication behavior indicating possible credential compromise.
-
----
-
-# 📊 Dashboard Overview
-
-### SOC Brute Force Dashboard
-
-
-**Description:** SOC dashboard visualizing authentication activity, including failed logins, successful logins, and suspicious user behavior trends.
+**Description:**
+Windows Event ID 4625 showing failed login attempts used to detect brute force and password guessing activity.
 
 ---
 
-# ⚖️ Risk Score Panel
+## 📊 Event Count Analysis
 
-### Risk-Based Scoring
+### Authentication Event Count
 
+![Count](Count.png)
 
-**Description:** Displays calculated risk scores based on failed login attempts and successful authentication patterns to prioritize suspicious activity.
-
----
-
-## 🧮 Risk Scoring Model
-
-* Failed login = +10 points
-* Successful login after failures = +40 points
-
-Used to prioritize suspicious activity.
+**Description:**
+Statistical breakdown of failed and successful login events used to identify suspicious authentication patterns.
 
 ---
 
-# 🧭 MITRE ATT&CK Mapping
+## 🧠 Correlation Search / Alert Logic
 
-### MITRE ATT&CK Mapping
+### Brute Force Detection Query Result
 
+![Brute Force Alert](Brute Force Alert.png)
 
-
-**Description:** Maps detected brute force activity to MITRE ATT&CK framework techniques T1110 (Brute Force) and T1078 (Valid Accounts).
-
----
-
-## 🧹 Security Log Cleared Event
-
-### Security Log Cleared Event
-
-
-
-**Description:** Displays Windows Security Event ID 1102, indicating that the security event log was cleared. This is a high-risk event often associated with attempts to hide malicious activity or erase forensic evidence.
+**Description:**
+SPL correlation output detecting multiple failed login attempts followed by successful authentication for the same user.
 
 ---
 
 ## 🚨 Alert Configuration
 
-* Trigger condition: Number of results > 0
-* Schedule: Every 5 minutes
-* Time range: Last 10–15 minutes
-* Severity: High
+### Alert Creation in Splunk
+
+![Alert Creation](Alert Creation.png)
+
+**Description:**
+Configuration of scheduled alert triggered when brute force conditions are met within the defined time window.
 
 ---
+
+## 🚨 Alert Triggered
+
+### Failed Login Alert Triggered
+
+![Failed login Alerts](Failed login Alerts.png)
+
+**Description:**
+Splunk alert triggered after detection of repeated failed login attempts indicating potential brute force activity.
+
+---
+
+## 📊 Dashboard Overview
+
+### SOC Brute Force Dashboard
+
+![Dashboard](Dashboard.png)
+
+**Description:**
+Dashboard visualizing authentication trends including failed logins, successful logins, and suspicious activity patterns.
+
+---
+
+## 🧹 Log Tampering Event
+
+### Windows Event Logs Deleted (1102)
+
+![Event Logs Deleted](Event Logs Deleted.png)
+
+**Description:**
+Windows Security Event ID 1102 indicating security log deletion, often associated with malicious activity or forensic evasion attempts.
+
 
 ## 📈 Key Features
 
@@ -202,4 +186,4 @@ Used to prioritize suspicious activity.
 
 ## 👤 Author
 
-SOC Lab Project – Splunk Brute Force Detection
+Nehal Patel
