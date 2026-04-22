@@ -37,10 +37,9 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 ---
 
 # 🖥️ Splunk Installation
-
+"C:\Users\nehal\OneDrive\Pictures\Screenshots 1\Homepage.png"
 ### Splunk Installation
 
-![Splunk Installation](screenshots/splunk-installation.png)
 
 **Description:** Splunk Enterprise is successfully installed and running, providing the SIEM platform used for log collection, search, and security monitoring.
 
