@@ -57,7 +57,6 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 
 ### Splunk Universal Forwarder Installation
 
-![Forwarder Install](screenshots/forwarder-install.png)
 
 **Description:** Splunk Universal Forwarder installed on a Windows endpoint to collect and forward Security Event Logs to the Splunk server.
 
@@ -67,7 +66,7 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 
 ### Data Ingestion into Splunk
 
-![Data Ingestion](screenshots/data-ingestion.png)
+
 
 **Description:** Confirms successful ingestion of Windows Security Event Logs into Splunk index (main), validating data pipeline setup.
 
@@ -77,7 +76,7 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 
 ### Raw Authentication Logs
 
-![Raw Logs](screenshots/raw-logs.png)
+
 
 **Description:** Displays raw Windows authentication events including failed (4625) and successful (4624) login attempts used for detection engineering.
 
@@ -87,7 +86,6 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 
 ### Brute Force Correlation Search
 
-![Correlation Search](screenshots/correlation-search.png)
 
 **Description:** SPL query correlating multiple failed login attempts followed by a successful login for the same user to detect potential brute force attacks.
 
@@ -111,7 +109,7 @@ index=main (EventCode=4625 OR EventCode=4624)
 
 ### Alert Triggered
 
-![Alert Triggered](screenshots/alert-triggered.png)
+
 
 **Description:** Splunk alert triggered when correlation rule detects suspicious authentication behavior indicating possible credential compromise.
 
@@ -121,7 +119,6 @@ index=main (EventCode=4625 OR EventCode=4624)
 
 ### SOC Brute Force Dashboard
 
-![Dashboard](screenshots/Dashboard.png)
 
 **Description:** SOC dashboard visualizing authentication activity, including failed logins, successful logins, and suspicious user behavior trends.
 
@@ -131,7 +128,6 @@ index=main (EventCode=4625 OR EventCode=4624)
 
 ### Risk-Based Scoring
 
-![Risk Score](screenshots/risk-score.png)
 
 **Description:** Displays calculated risk scores based on failed login attempts and successful authentication patterns to prioritize suspicious activity.
 
@@ -150,7 +146,7 @@ Used to prioritize suspicious activity.
 
 ### MITRE ATT&CK Mapping
 
-![MITRE](screenshots/mitre.png)
+
 
 **Description:** Maps detected brute force activity to MITRE ATT&CK framework techniques T1110 (Brute Force) and T1078 (Valid Accounts).
 
@@ -160,7 +156,7 @@ Used to prioritize suspicious activity.
 
 ### Security Log Cleared Event
 
-![Log Cleared Event](screenshots/log-cleared.png)
+
 
 **Description:** Displays Windows Security Event ID 1102, indicating that the security event log was cleared. This is a high-risk event often associated with attempts to hide malicious activity or erase forensic evidence.
 
