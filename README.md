@@ -1,47 +1,106 @@
-# SOC-Brute-Force-Detection
-SOC detection project using Splunk to identify brute force attacks by correlating failed and successful login attempts. Includes MITRE ATT&amp;CK mapping (T1110, T1078), risk scoring, and a SOC-style dashboard for threat visibility and analysis.
 # SOC Brute Force Detection using Splunk
 
 ## 📌 Project Overview
 
-This project demonstrates a Security Operations Center (SOC)-style detection system built in Splunk to identify potential brute force attacks followed by successful authentication attempts. The goal is to simulate a real-world SIEM use case where failed login attempts are correlated with successful logins to detect possible account compromise.
-
----
-
-## 🎯 Objective
-
-To detect suspicious authentication patterns where multiple failed login attempts are followed by a successful login for the same user within a short time window, indicating potential brute force attacks and credential compromise.
+This project demonstrates a Security Operations Center (SOC)-style detection system built in Splunk to identify brute force attacks followed by successful authentication attempts. It correlates Windows authentication logs to detect potential account compromise scenarios.
 
 ---
 
 ## 🧠 Attack Scenario
 
-Attack pattern detected:
+The detection focuses on the following pattern:
 
-1. Multiple failed login attempts (possible password guessing)
-2. Successful login after failures (possible compromise)
+* Multiple failed login attempts (brute force / password guessing)
+* Followed by a successful login for the same user
 
-This pattern aligns with:
+This may indicate:
 
 * Credential stuffing
 * Brute force attacks
-* Account takeover attempts
+* Account takeover
 
 ---
 
 ## 🛠️ Technology Stack
 
-* Splunk Enterprise / Splunk Free
+* Splunk Enterprise
 * Windows Security Event Logs
+* Splunk Universal Forwarder
 * SPL (Search Processing Language)
 
 ---
 
-## 📊 Detection Logic (SPL Query)
+## 🏗️ Project Workflow
+
+Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Search → Alert → Dashboard
+
+---
+
+# 🖥️ Splunk Installation
+
+### Splunk Installation
+
+![Splunk Installation](screenshots/splunk-installation.png)
+
+**Description:** Splunk Enterprise is successfully installed and running, providing the SIEM platform used for log collection, search, and security monitoring.
+
+---
+
+# 🔐 Splunk Login Interface
+
+### Splunk Login
+
+![Splunk Login](screenshots/splunk-login.png)
+
+**Description:** Shows successful login to Splunk Web UI, confirming access to the Search & Reporting environment for security analysis.
+
+---
+
+# 📡 Universal Forwarder Installation
+
+### Splunk Universal Forwarder Installation
+
+![Forwarder Install](screenshots/forwarder-install.png)
+
+**Description:** Splunk Universal Forwarder installed on a Windows endpoint to collect and forward Security Event Logs to the Splunk server.
+
+---
+
+# 📥 Data Ingestion Verification
+
+### Data Ingestion into Splunk
+
+![Data Ingestion](screenshots/data-ingestion.png)
+
+**Description:** Confirms successful ingestion of Windows Security Event Logs into Splunk index (main), validating data pipeline setup.
+
+---
+
+# 🔍 Raw Log Search
+
+### Raw Authentication Logs
+
+![Raw Logs](screenshots/raw-logs.png)
+
+**Description:** Displays raw Windows authentication events including failed (4625) and successful (4624) login attempts used for detection engineering.
+
+---
+
+# 🧠 Correlation Search (Brute Force Detection)
+
+### Brute Force Correlation Search
+
+![Correlation Search](screenshots/correlation-search.png)
+
+**Description:** SPL query correlating multiple failed login attempts followed by a successful login for the same user to detect potential brute force attacks.
+
+---
+
+## ⚙️ Detection Logic (SPL Query)
 
 ```spl
 index=main (EventCode=4625 OR EventCode=4624)
-| stats
+| stats 
     count(eval(EventCode=4625)) as failures,
     count(eval(EventCode=4624)) as successes,
     values(src_ip) as ip
@@ -51,32 +110,62 @@ index=main (EventCode=4625 OR EventCode=4624)
 
 ---
 
-## ⚖️ Risk Scoring Model
+# 🚨 Alert Triggered
 
-To prioritize alerts, a simple risk scoring model was implemented:
+### Alert Triggered
 
-* Each failed login = +10 points
-* Successful login after failures = +40 points
+![Alert Triggered](screenshots/alert-triggered.png)
 
-Example SPL:
-
-```spl
-index=main (EventCode=4625 OR EventCode=4624)
-| stats
-    count(eval(EventCode=4625)) as failures,
-    count(eval(EventCode=4624)) as successes
-    by Account_Name, src_ip
-| eval risk_score = (failures * 10) + (successes * 40)
-| where failures >= 3 AND successes >= 1
-| sort - risk_score
-```
+**Description:** Splunk alert triggered when correlation rule detects suspicious authentication behavior indicating possible credential compromise.
 
 ---
 
-## 🧭 MITRE ATT&CK Mapping
+# 📊 Dashboard Overview
 
-* **T1110** – Brute Force (Password Guessing)
-* **T1078** – Valid Accounts (Successful authentication after compromise)
+### SOC Brute Force Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+**Description:** SOC dashboard visualizing authentication activity, including failed logins, successful logins, and suspicious user behavior trends.
+
+---
+
+# ⚖️ Risk Score Panel
+
+### Risk-Based Scoring
+
+![Risk Score](screenshots/risk-score.png)
+
+**Description:** Displays calculated risk scores based on failed login attempts and successful authentication patterns to prioritize suspicious activity.
+
+---
+
+## 🧮 Risk Scoring Model
+
+* Failed login = +10 points
+* Successful login after failures = +40 points
+
+Used to prioritize suspicious activity.
+
+---
+
+# 🧭 MITRE ATT&CK Mapping
+
+### MITRE ATT&CK Mapping
+
+![MITRE](screenshots/mitre.png)
+
+**Description:** Maps detected brute force activity to MITRE ATT&CK framework techniques T1110 (Brute Force) and T1078 (Valid Accounts).
+
+---
+
+## 🧹 Security Log Cleared Event
+
+### Security Log Cleared Event
+
+![Log Cleared Event](screenshots/log-cleared.png)
+
+**Description:** Displays Windows Security Event ID 1102, indicating that the security event log was cleared. This is a high-risk event often associated with attempts to hide malicious activity or erase forensic evidence.
 
 ---
 
@@ -89,63 +178,35 @@ index=main (EventCode=4625 OR EventCode=4624)
 
 ---
 
-## 📊 Dashboard Components
+## 📈 Key Features
 
-The following panels were created:
-
-1. Brute Force Detection Overview (Correlation results)
-2. Failed Login Trends
-3. Successful Login Activity
-4. Risk Score Table (Top suspicious users/IPs)
-
----
-
-## 🏗️ Architecture
-
-```
-Windows Machines (Event Logs)
-        ↓
-Splunk Index (main)
-        ↓
-Correlation Search (SPL)
-        ↓
-Alert Trigger (5 min schedule)
-        ↓
-Dashboard Visualization
-```
-
----
-
-## 📸 Evidence (Screenshots)
-
-* Dashboard view
-* Alert triggered
-* Email notification
-* Splunk search results
-
----
-
-## 🔍 Key Features
-
-* Real-time brute force detection
+* Brute force detection
 * Correlation of failed and successful logins
-* Risk-based scoring model
+* Risk scoring model
 * MITRE ATT&CK mapping
-* SOC-style dashboard visualization
+* SOC-style dashboard
 
 ---
 
-## 📈 Skills Demonstrated
+## 🧠 Skills Demonstrated
 
-* SIEM analysis (Splunk)
-* SPL query development
+* SIEM (Splunk) analysis
 * Threat detection engineering
-* MITRE ATT&CK framework mapping
-* SOC alert configuration
-* Dashboard creation
+* SPL query development
+* MITRE ATT&CK mapping
+* Security monitoring & alerting
+
+---
+
+## 🚀 Future Improvements
+
+* Geo-location anomaly detection
+* Password spraying detection
+* Lateral movement detection
+* SOAR integration (ServiceNow/Jira simulation)
 
 ---
 
 ## 👤 Author
 
-SOC Lab Project – Brute Force Detection using Splunk
+SOC Lab Project – Splunk Brute Force Detection
