@@ -34,18 +34,6 @@ This may indicate:
 
 Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Search → Alert → Dashboard
 
----
-
-Perfect—now I’ll align your **README image sections exactly to your real filenames** so everything renders correctly on GitHub.
-
-Here is your **fixed README screenshots section (copy-paste ready):**
-
----
-
-# 📸 SOC Brute Force Detection – Screenshots
-
----
-
 ## 🏠 Splunk Homepage
 
 ### Splunk Home Dashboard
@@ -61,7 +49,7 @@ Splunk homepage showing successful login to the Search & Reporting interface use
 
 ### Splunk Universal Forwarder Configuration
 
-![Forwarder Setup](Forwarder Setup.png)
+![Forwarder Setup](ForwarderSetup.png)
 
 **Description:**
 Configuration of Splunk Universal Forwarder on a Windows endpoint to forward authentication logs to Splunk index for analysis.
@@ -116,7 +104,7 @@ SPL correlation output detecting multiple failed login attempts followed by succ
 
 ### Alert Creation in Splunk
 
-![Alert Creation](Alert Creation.png)
+![Alert Creation](AlertCreation.png)
 
 **Description:**
 Configuration of scheduled alert triggered when brute force conditions are met within the defined time window.
