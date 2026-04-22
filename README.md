@@ -37,7 +37,7 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 ---
 
 # 🖥️ Splunk Installation
-"C:\Users\nehal\OneDrive\Pictures\Screenshots 1\Homepage.png"
+
 ### Splunk Installation
 
 
@@ -48,8 +48,6 @@ Windows Machine → Splunk Forwarder → Splunk Index (main) → Correlation Sea
 # 🔐 Splunk Login Interface
 
 ### Splunk Login
-
-![Splunk Login](screenshots/splunk-login.png)
 
 **Description:** Shows successful login to Splunk Web UI, confirming access to the Search & Reporting environment for security analysis.
 
@@ -123,7 +121,7 @@ index=main (EventCode=4625 OR EventCode=4624)
 
 ### SOC Brute Force Dashboard
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/Dashboard.png)
 
 **Description:** SOC dashboard visualizing authentication activity, including failed logins, successful logins, and suspicious user behavior trends.
 
