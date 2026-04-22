@@ -105,7 +105,7 @@ Statistical breakdown of failed and successful login events used to identify sus
 
 ### Brute Force Detection Query Result
 
-![Brute Force Alert](Brute Force Alert.png)
+![Brute Force Alert](BruteForceAlert.png)
 
 **Description:**
 SPL correlation output detecting multiple failed login attempts followed by successful authentication for the same user.
@@ -127,7 +127,7 @@ Configuration of scheduled alert triggered when brute force conditions are met w
 
 ### Failed Login Alert Triggered
 
-![Failed login Alerts](Failed login Alerts.png)
+![Failed login Alerts](FailedloginAlerts.png)
 
 **Description:**
 Splunk alert triggered after detection of repeated failed login attempts indicating potential brute force activity.
@@ -149,7 +149,7 @@ Dashboard visualizing authentication trends including failed logins, successful 
 
 ### Windows Event Logs Deleted (1102)
 
-![Event Logs Deleted](Event Logs Deleted.png)
+![Event Logs Deleted](EventLogsDeleted.png)
 
 **Description:**
 Windows Security Event ID 1102 indicating security log deletion, often associated with malicious activity or forensic evasion attempts.
